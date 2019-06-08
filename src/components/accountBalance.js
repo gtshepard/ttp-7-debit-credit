@@ -15,9 +15,11 @@ class AccountBalance extends Component {
         date
     } = this.props.credit
 **/
-      return (<div>
-       Balance: {this.props.credit && this.props.credit.amount || "hello"}
-      </div>);
+      return (
+       <div>
+         {this.props.credit && this.props.credit.amount || "hello"}
+       </div>
+    );
   }
 }
 
