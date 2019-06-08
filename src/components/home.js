@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import AccountBalance from './accountBalance.js';
-import {Link} from 'react-router-dom'
 import Nav from './nav.js'
+import TransactionForm from './transactionForm.js'
 
 class Home extends Component {
 
@@ -9,7 +8,7 @@ class Home extends Component {
       return(
           <div>
               <Nav pageName="Bank of React"/>
-              <AccountBalance accountBalance={this.props.accountBalance}/>
+              <TransactionForm/>
           </div>
       )
   }

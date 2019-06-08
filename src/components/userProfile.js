@@ -3,41 +3,58 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Nav from './nav.js'
 import axios from 'axios'
-import AccountBalance from './accountBalance.js'
+import Credit from './credit.js'
+import Debit from './debit.js'
+import '../style/data.css'
+
 class UserProfile extends Component {
   constructor(props){
      super(props)
      this.state = {
-         credit:[]
+         credit:[],
+         debit:[],
+         totalCredit: 0,
+         totalDebit: 0
      }
   }
 
-  fecthAccountData = async () => {
-        //let {debit} = await axios.get('https://moj-api.herokuapp.com/debits')
-        let acc = (await axios.get('https://moj-api.herokuapp.com/credits')).data
-        //console.log(typeof acc)
-        console.log("bug:" + acc)
-        this.setState({credit:acc});
-      //  console.log(credit[0]);
+  fetchCreditData = async (reportType) => {
+     let acc = (await axios.get('https://moj-api.herokuapp.com/' + reportType)).data
+     this.setState({credit:acc});
   }
-  onClickHandler = () => {
-      this.fecthAccountData();
+
+  fetchDebitData = async () => {
+     let data = (await axios.get('https://moj-api.herokuapp.com/debits')).data
+     this.setState({debit:data});
+  }
+
+  componentDidMount(){
+    this.fetchCreditData("credits");
+    this.fetchDebitData();
   }
 
   render() {
-    let account = this.state.credit || [];
-  //  acc.forEach((e) => console.log(e))
-    let accountInfo = account.map((transaction) =>
-      <AccountBalance credit={transaction}/>
-    );
+    let cBal = this.state.credit
+    let cBalance = 0;
+    cBal.forEach((e) => cBalance += e.amount);
+    console.log("credit: " + cBalance);
+    ///this.setState({totalCredit: balance});
+    let dBal = this.state.debit
+    let dBalance = 0;
+    dBal.forEach((e) => dBalance += e.amount);
+    console.log("debit: " + dBalance);
 
       return(
         <div>
             <Nav pageName="Profile"/>
-            <button onClick={this.onClickHandler}> Account </button>
             <div> UserName: {this.props.userName}</div>
             <div> Member Since: {this.props.memberSince}</div>
-            {accountInfo}
+            <div> Credit: {"$" + cBalance}</div>
+            <div> Debit:{"$" + dBalance}</div>
+            <div> Balance:{"$" + (cBalance - dBalance).toFixed(2)}</div>
+            <div className="flex-container">
+            
+            </div>
         </div>
       )
   }

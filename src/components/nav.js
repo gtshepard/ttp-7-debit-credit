@@ -20,14 +20,16 @@ class Nav extends Component {
                       <div className="button-box ">
                           <Link className="link" to="/login">Login</Link>
                       </div>
+                      <div className="button-box ">
+                          <Link className="link" to="/credit">Credit</Link>
+                      </div>
+                      <div className="button-box ">
+                          <Link className="link" to="/debit">Debit</Link>
+                      </div>
                   </div>
               </div>
               </div>
         );
     }
 }
-/*
-
-
-*/
 export default Nav
