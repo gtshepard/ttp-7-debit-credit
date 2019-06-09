@@ -6,17 +6,23 @@ import axios from 'axios'
 import Credit from './credit.js'
 import Debit from './debit.js'
 import '../style/data.css'
+import DebitProfile from './debitProfile.js'
+import CreditProfile from './creditProfile.js'
 
 class UserProfile extends Component {
   constructor(props){
      super(props)
      this.state = {
+         redirect: "credit",
          credit:[],
          debit:[],
          totalCredit: 0,
          totalDebit: 0
      }
   }
+
+  //TODO: pass state down as props to credit and debits
+  //TODO: conditional rendering of credit and debit depending on selectted button. (this includes the form)
 
   fetchCreditData = async (reportType) => {
      let acc = (await axios.get('https://moj-api.herokuapp.com/' + reportType)).data
@@ -53,7 +59,10 @@ class UserProfile extends Component {
             <div> Debit:{"$" + dBalance}</div>
             <div> Balance:{"$" + (cBalance - dBalance).toFixed(2)}</div>
             <div className="flex-container">
-            
+
+                <div>
+                  <CreditProfile balance={ "$" + (cBalance - dBalance).toFixed(2)}/>
+                </div>
             </div>
         </div>
       )

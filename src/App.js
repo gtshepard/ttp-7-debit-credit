@@ -17,7 +17,6 @@ class App extends Component {
           memberSince: '8/23/99'
       }
     }
-
   }
 
   mockLogin = (loginInfo) => {
@@ -30,6 +29,10 @@ render(){
   const HomeComponent = () => (<Home accountBalance={this.state.accountBalance}/>);
   const UserProfileComponent = () => (<UserProfile userName={this.state.currentUser.userName}
     memberSince={this.state.currentUser.memberSince}/>);
+  const UserProfileCreditComponent = () => (<UserProfile profile="credit" userName={this.state.currentUser.userName}
+    memberSince={this.state.currentUser.memberSince}/>);
+  const UserProfileDebitComponent = () => (<UserProfile profile="debit" userName={this.state.currentUser.userName}
+      memberSince={this.state.currentUser.memberSince}/>);
   const LoginComponent = () => (<Login user={this.state.currentUser} mockLogin={this.mockLogin} />)
   const CreditComponent = () => (<CreditProfile/>)
   const DebitComponent = () => (<DebitProfile/>)
@@ -38,7 +41,7 @@ render(){
     <Router>
         <div>
           <Route exact path="/" render={HomeComponent}/>
-          <Route exact path="/userProfile" render={UserProfileComponent} />
+          <Route exact path="/userProfile" render={UserProfileComponent}/>
           <Route exact path="/login" render={LoginComponent}/>
           <Route exact path="/credit" render={CreditComponent}/>
           <Route exact path="/debit" render={DebitComponent}/>

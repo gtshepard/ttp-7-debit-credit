@@ -48,7 +48,7 @@ class TransactionForm extends Component {
             <form onSubmit={this.onSubmitHandle}>
                 <input name="amount" type="text" placeholder="$555.07" onChange={this.onChangeHandleAmount}/>
                 <input name="date" type="text"   placeholder="06-19-19" onChange={this.onChangeHandleDate}/>
-                <input name="desc" type="text"  placeholder=" this is good" onChange={this.onChangeHandleDesc}/>
+                <input name="desc" type="text"  placeholder=" good duck stew" onChange={this.onChangeHandleDesc}/>
                 <input type="submit" value="submit"/>
             </form>
             {this.state.amount}
