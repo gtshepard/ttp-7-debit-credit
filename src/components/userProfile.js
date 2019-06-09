@@ -13,7 +13,7 @@ class UserProfile extends Component {
   constructor(props){
      super(props)
      this.state = {
-         redirect: "credit",
+         types: "profile",
          credit:[],
          debit:[],
          totalCredit: 0,
@@ -35,6 +35,7 @@ class UserProfile extends Component {
   }
 
   componentDidMount(){
+    this.setState({types: this.props.types});
     this.fetchCreditData("credits");
     this.fetchDebitData();
   }
@@ -50,7 +51,8 @@ class UserProfile extends Component {
     dBal.forEach((e) => dBalance += e.amount);
     console.log("debit: " + dBalance);
 
-      return(
+    if(this.state.types === "profile"){
+      return (
         <div>
             <Nav pageName="Profile"/>
             <div> UserName: {this.props.userName}</div>
@@ -58,14 +60,31 @@ class UserProfile extends Component {
             <div> Credit: {"$" + cBalance}</div>
             <div> Debit:{"$" + dBalance}</div>
             <div> Balance:{"$" + (cBalance - dBalance).toFixed(2)}</div>
-            <div className="flex-container">
-
-                <div>
-                  <CreditProfile balance={ "$" + (cBalance - dBalance).toFixed(2)}/>
+        </div>)
+      }else if (this.state.types === "credit"){
+            return (
+              <div>
+                <Nav pageName="Credit Profile"/>
+                <div className="flex-container">
+                  <div>
+                    <CreditProfile balance={ "$" + (cBalance - dBalance).toFixed(2)}/>
+                  </div>
                 </div>
+              </div>)
+      } else if (this.state.types === "debit"){
+        return (
+          <div>
+          <Nav pageName="Credit Profile"/>
+          <div className="flex-container">
+            <div>
+              <DebitProfile balance={ "$" + (cBalance - dBalance).toFixed(2)}/>
             </div>
-        </div>
-      )
+          </div>
+          </div>)
+      } else {
+          return(<p>ERROR</p>)
+          console.log("ERROR")
+      }
   }
 }
 export default UserProfile;

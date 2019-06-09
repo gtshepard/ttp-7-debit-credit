@@ -11,22 +11,21 @@ class CreditProfile extends Component {
      super(props)
      this.state = {
          credit:[],
-         iAmount: 0,
-         iDate: "5-33",
-         iDesc: "hello"
+         amount: 0,
+         date: "5-33",
+         description: "hello"
      }
   }
 
   componentDidMount(){
-        this.fecthAccountData("credits");
+      this.fecthAccountData("credits");
   }
-
 
   fecthAccountData = async (reportType) => {
      let acc = (await axios.get('https://moj-api.herokuapp.com/' + reportType)).data
      this.setState({credit:acc});
+     console.log(this.state.credit)
   }
-
 
   onChangeHandleAmount = (event) => {
       this.setState({ amount: event.target.value});
@@ -39,30 +38,38 @@ class CreditProfile extends Component {
   }
 
   onChangeHandleDesc = (event) => {
-      this.setState({ desc: event.target.value});
-      console.log("On Change:" + this.state.desc);
+      this.setState({ description: event.target.value});
+      console.log("On Change:" + this.state.description);
   }
 
   onSubmitHandle = (event) => {
     event.preventDefault();
       console.log("SUBMIT:" +  this.state.amount)
 
-      this.setState((state) => { state.info.push(
+      this.setState((state) => { state.credit.push(
         {
-          a: this.state.amount,
-          b: this.state.date,
-          c: this.state.desc
+          amount: this.state.amount,
+          date: this.state.date,
+          description: this.state.description
         }
     )});
-      console.log(this.state.info);
+
+    console.log(this.state.credit);
   }
 
   render() {
-    let credits = this.state.credit || [];
-  //  acc.forEach((e) => console.log(e))
+    console.log("RENDERME")
+    let credits = this.state.credit|| [];
+    console.log("SHOULD" + this.state.credit)
     let creditInfo = credits.map((transaction) =>
       <Credit credit={transaction}/>
     );
+
+    let ok = credits.forEach((transaction) =>
+      console.log("T" + transaction)
+    );
+
+
       return(
         <div>
             <div className="center-flex">
@@ -70,9 +77,21 @@ class CreditProfile extends Component {
                   <div className="data-item">
                   Balance: {this.props.balance}
               </div>
-
-              </div>
             </div>
+
+
+            <div>
+            <form onSubmit={this.onSubmitHandle}>
+                <input name="amount" type="text" placeholder="$555.07" onChange={this.onChangeHandleAmount}/>
+                <input name="date" type="text"   placeholder="06-19-19" onChange={this.onChangeHandleDate}/>
+                <input name="desc" type="text"  placeholder=" good duck stew" onChange={this.onChangeHandleDesc}/>
+                <input type="submit" value="submit"/>
+            </form>
+            {this.state.amount}
+            </div>
+
+
+        </div>
 
             <div className="center-flex">
                  <div className="data-flex-container">
@@ -86,5 +105,4 @@ class CreditProfile extends Component {
       )
   }
 }
-          //<button onClick={this.onClickCreditHandler}> Credit </button>
 export default CreditProfile;

@@ -34,7 +34,15 @@ class DebitProfile extends Component {
 
       return(
         <div>
-            <Nav pageName="Debit Profile"/>
+
+          <div className="center-flex">
+          <div className="data-flex-container">
+              <div className="data-item">
+              Balance: {this.props.balance}
+              </div>
+          </div>
+          </div>
+
             <div className="center-flex">
               <div className="data-flex-container">
                   <form>
